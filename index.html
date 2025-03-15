@@ -1,28 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <div class="container">
         <header>
+            <div class="social-media">
+                <a href="https://www.linkedin.com/in/phanindra-kumar-yellapu" target="_blank"><img
+                        src="images/in-logo/InBug-White.png" alt="Linkedin" class="social-media-img"></a>
+                <a href="https://github.com/phani92" target="_blank"><img src="images/github/github-mark-white.svg"
+                        alt="github" class="social-media-img"></a>
+                <a href="https://www.instagram.com/phani_paridosh" target="_blank"><img
+                        src="images/instagram/02 White Glyph/Instagram_Glyph_White.svg" alt="instagram"
+                        class="social-media-img"></a>
+            </div>
             <nav>
                 <ul>
-                    <li><a href="#">Projects</a></li>
-                    <li><a href="#">Photos</a></li>
-                    <li><a href="#">Blogs</a></li>
+                    <li><a href="#" id="home-link">Home</a></li>
+                    <li><a href="#" id="projects-link">Projects</a></li>
+                    <li><a href="#" id="blogs-link">Blogs</a></li>
+                    <li><a href="#" id="contact-link">Contact</a></li>
                 </ul>
             </nav>
         </header>
         <main>
             <div class="profile">
                 <img src="images/profile-placeholder.jpg" alt="Your Image" class="profile-img">
-                <h1 class="name">Phani!</h1>
+                <h1 class="name">
+                    <span id="animated-text">Hello world!</span>
+                    <br>
+                    <span id="name"> I am Phani!</span>
+                </h1>
             </div>
         </main>
     </div>
+    <script src="js/main.js"></script>
 </body>
+
 </html>
