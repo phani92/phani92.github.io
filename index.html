@@ -7,6 +7,10 @@
     <title>Personal Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/projects.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 
 <body>
@@ -31,35 +35,9 @@
             </nav>
         </header>
         <main>
-            <div class="profile">
-                <img src="images/profile-placeholder.jpg" alt="Your Image" class="profile-img">
-                <h1 class="name">
-                    <span id="animated-text">Hello World!</span>
-                    <br>
-                    <span id="username">I am Phani!</span>
-                </h1>
-                <p class="description">
-                    I am an Engineer who likes to collaborate on realizing ideas.
-                    <br>
-                    I enjoy writing code and tackling projects that blend electrical and mechanical engineering.
-                    <br>
-                    In my free time, I enjoy sports, traveling, meeting new people, learning about cultures and having
-                    fun.
-                </p>
-            </div>
-            <h1>Contact</h1>
-            <form class="contact-form">
-                <div class="half left cf">
-                    <input type="text" id="input-name" placeholder="Name">
-                    <input type="email" id="input-email" placeholder="Email address">
-                    <input type="phone" id="input-phone" placeholder="Phone number">
-                    <input type="text" id="input-subject" placeholder="Subject">
-                </div>
-                <div class="half right cf">
-                    <textarea name="message" type="text" id="input-message" placeholder="Message"></textarea>
-                </div>
-                <button type="submit" id="input-submit">Submit</button>
-            </form>
+            <div id="profile-section"></div>
+            <div id="projects-section"></div>
+            <div id="contact-section"></div>
         </main>
         <footer>
             <p>All rights reserved.</p>
