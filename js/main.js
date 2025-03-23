@@ -3,7 +3,6 @@
 
 // Function to load the content of the page
 document.addEventListener('DOMContentLoaded', function () {
-    // Function to load content dynamically
     function loadContent(page) {
         const content = document.getElementById('content');
         fetch(page)
@@ -15,21 +14,21 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Event listeners for navigation links
-    document.getElementById('home-link').addEventListener('click', function () {
+    document.getElementById('home-link').addEventListener('click', function (e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.getElementById('projects-link').addEventListener('click', function () {
         loadContent('index.html');
     });
 
-    document.getElementById('portfolio-link').addEventListener('click', function () {
-        loadContent('projects/index.html');
-    });
-
-    document.getElementById('photos-link').addEventListener('click', function () {
-        loadContent('photos/index.html');
-    });
-
     document.getElementById('blogs-link').addEventListener('click', function () {
-        loadContent('blogs/index.html');
+        loadContent('index.html');
     });
+
+    ContactForm.init();
+    ContactForm.setupContactLink();
 
     // Load the home page by default
     loadContent('index.html');
