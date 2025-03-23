@@ -5,6 +5,8 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 /* Container */
@@ -12,15 +14,17 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     height: 100vh;
+    padding: 80px;
 }
 
 /* Navigation */
 nav {
-    position: absolute;
+    position: fixed;
     top: 10px;
     right: 20px;
+    z-index: auto;
 }
 
 nav ul {
@@ -46,11 +50,12 @@ nav ul li a:hover {
 
 /* Social Media Icons */
 .social-media {
-    position: absolute;
+    position: fixed;
     top: 20px;
     left: 20px;
     display: flex;
-    gap: 20px; /* Add gap between icons */
+    gap: 20px;
+    z-index: auto;
 }
 
 .social-media a {
@@ -69,7 +74,11 @@ nav ul li a:hover {
 
 /* Profile Section */
 .profile {
+    margin-top: 20px;
     text-align: center;
+    margin-bottom: auto;
+    width: 100%;
+    max-width: auto;
 }
 
 .profile-img {
@@ -81,13 +90,25 @@ nav ul li a:hover {
 }
 
 @keyframes typing {
-    from { width: 0; }
-    to { width: 12ch; }
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 12ch;
+    }
 }
 
 @keyframes blink-caret {
-    from, to { border-color: #121212; }
-    50% { border-color: #1e90ff; }
+
+    from,
+    to {
+        border-color: #121212;
+    }
+
+    50% {
+        border-color: #1e90ff;
+    }
 }
 
 #animated-text {
@@ -95,7 +116,7 @@ nav ul li a:hover {
     overflow: hidden;
     white-space: nowrap;
     border-right: 3px solid;
-    font-family:'Courier New', Courier, monospace;
+    font-family: 'Courier New', Courier, monospace;
     font-size: 1.5em;
     animation: typing 3s steps(12, end) forwards, blink-caret 0.5s step-end infinite;
 }
@@ -104,20 +125,86 @@ nav ul li a:hover {
     font-size: 1.25em;
     margin-top: 5px;
     color: #f3ecec;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
 
 .description {
     font-size: 1.5em;
     margin-top: 1px;
     color: #f3ecec;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-/* Footer */
-footer {
-    position: absolute;
-    bottom: 0;
+/* Contact Section */
+.contact-form {
+    padding: 10px;
+    margin-top: 0px;
+    margin-bottom: 50px; /* Add margin at the bottom */
     width: 100%;
+    max-width: 600px;
+    text-align: left;
+    margin: auto;
+    display: block;
+}
+
+h1 {
     text-align: center;
+    margin-top: 80px;
+    margin-bottom: 0px;
+    color: #1e90ff;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 0px solid #333;
+    border-radius: 15px;
+    background-color: #2a2a2a;
+    color: #fff;
+}
+
+.contact-form .half {
+    width: 45%;
+    float: left;
+}
+
+.contact-form .right {
+    margin-left: 4%;
+    width: 48%;
+}
+
+.contact-form textarea {
+    height: 140px;
+}
+
+.contact-form button {
+    background-color: #1e90ff;
+    color: white;
+    padding: 10px 10px;
+    border: white;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 15px;
+    width: 100%;
+    margin: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: block;
+}
+
+.contact-form button:hover {
+    background-color: #0066cc;
+    transform: scale(1.05);
+}
+
+/* Clearfix for floating elements */
+.cf:before,
+.cf:after {
+    content: " ";
+    display: table;
+}
+
+.cf:after {
+    clear: both;
 }
