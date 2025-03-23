@@ -1,35 +1,44 @@
 // Author: Phani!
 // Purpose: JavaScript file for the main page
 
-// Function to load the content of the page
 document.addEventListener('DOMContentLoaded', function () {
-    function loadContent(page) {
-        const content = document.getElementById('content');
-        fetch(page)
+    function loadSection(id, filePath, callback) {
+        const section = document.getElementById(id);
+        fetch(filePath)
             .then(response => response.text())
             .then(data => {
-                content.innerHTML = data;
+                section.innerHTML = data;
+                if (callback) callback();
             })
-            .catch(error => console.error('Error loading content:', error));
+            .catch(error => console.error(`Error loading ${filePath}:`, error));
     }
 
-    // Event listeners for navigation links
+    // Home
+    loadSection('profile-section', 'html/profile.html');
     document.getElementById('home-link').addEventListener('click', function (e) {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    document.getElementById('projects-link').addEventListener('click', function () {
-        loadContent('index.html');
+    // Projects
+    loadSection('projects-section', 'html/projects.html', () => {
+        loadGitHubProjects();
+    });
+    document.getElementById('projects-link').addEventListener('click', function (e) {
+        e.preventDefault();
+        const section = document.getElementById('projects-section');
+        if (section) section.scrollIntoView({ behavior: 'smooth' });
     });
 
-    document.getElementById('blogs-link').addEventListener('click', function () {
-        loadContent('index.html');
+    // Blogs
+    document.getElementById('blogs-link').addEventListener('click', function (e) {
+        e.preventDefault();
+        alert('Blogs section coming soon!');
     });
 
-    ContactForm.init();
-    ContactForm.setupContactLink();
-
-    // Load the home page by default
-    loadContent('index.html');
+    // Contact
+    loadSection('contact-section', 'html/contact.html', () => {
+        ContactForm.init();
+        ContactForm.setupContactLink();
+    });
 });

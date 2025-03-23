@@ -1,5 +1,5 @@
 # Portfolio Builder
-* Lets build a personal website and host it on github
+* This project builds a website for personal portfolio using html, css and javascript.
 
 ## Project Structure
 
@@ -19,7 +19,7 @@
    ```
    git clone <repository-url>
    ```
-2. Open `index.html` in a web browser to view the portfolio.
+2. To launch the project, run `python -m http.server` and open `localhost:8000` in a browser.
 3. Customize the content in the `about`, `projects`, and `contact` sections as needed.
 
 ## License
