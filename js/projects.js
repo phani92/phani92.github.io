@@ -14,7 +14,7 @@ const loadGitHubProjects = () => {
             console.log('Fetched repos:', repos);
 
             // Filter out forks (optional)
-            const filtered = repos.filter(repo => !repo.fork);
+            const filtered = repos.filter(repo => !repo.fork && repo.stargazers_count > 0);
 
             // Sort by stars
             filtered.sort((a, b) => b.stargazers_count - a.stargazers_count);
