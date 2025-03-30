@@ -2,7 +2,36 @@
 // Purpose: JavaScript file for the contact
 
 const ContactForm = (function () {
-    // Private functions
+    // Initialize EmailJS
+    function loadEmailJS() {
+        return new Promise((resolve, reject) => {
+            if (window.emailjs) {
+                resolve();
+                return;
+            }
+
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+            script.onload = () => {
+                emailjs.init({
+                    publicKey: 'LbUyNez59XSRigbrb',
+                    blockHeadless: true,
+                    blockList: {
+                        list: [],
+                        watchVariable: 'from_email',
+                    },
+                    limitRate: {
+                        id: 'app',
+                        throttle: 60000,
+                    },
+                });
+                resolve();
+            };
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
+    }
+
     function isValidEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
@@ -139,10 +168,14 @@ const ContactForm = (function () {
     // Public methods
     return {
         init: function () {
-            const contactForm = document.querySelector('.contact-form');
-            if (contactForm) {
-                contactForm.addEventListener('submit', validateForm);
-            }
+            loadEmailJS().then(() => {
+                const contactForm = document.querySelector('.contact-form');
+                if (contactForm) {
+                    contactForm.addEventListener('submit', validateForm);
+                }
+            }).catch((error) => {
+                console.error('Error loading EmailJS:', error);
+            });
         },
     };
 })();
