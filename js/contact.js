@@ -14,7 +14,7 @@ const ContactForm = (function () {
             script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
             script.onload = () => {
                 emailjs.init({
-                    publicKey: 'LbUyNez59XSRigbrb',
+                    publicKey: ENV.EMAILJS_PUBLIC_KEY,
                     blockHeadless: true,
                     blockList: {
                         list: [],
@@ -153,7 +153,7 @@ const ContactForm = (function () {
                 message: messageInput.value
             };
 
-            emailjs.send("service_rxiyvj9", "template_vak1gc5", templateParams)
+            emailjs.send(ENV.EMAILJS_SERVICE_ID, ENV.EMAILJS_TEMPLATE_ID, templateParams)
                 .then((response) => {
                     console.log("SUCCESS!", response.status, response.text);
                     showSuccessMessage(this);
