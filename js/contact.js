@@ -116,9 +116,23 @@ const ContactForm = (function () {
 
         // If valid, submit the form (or show success message)
         if (isValid) {
-            // Optional: You can submit the form or send data via AJAX here
-            showSuccessMessage(this);
-            this.reset(); // Clear form fields
+            const templateParams = {
+                from_name: nameInput.value,
+                from_email: emailInput.value,
+                phone: phoneInput.value.trim(),
+                subject: subjectInput.value,
+                message: messageInput.value
+            };
+
+            emailjs.send("service_rxiyvj9", "template_vak1gc5", templateParams)
+                .then((response) => {
+                    console.log("SUCCESS!", response.status, response.text);
+                    showSuccessMessage(this);
+                    this.reset();
+                }, (error) => {
+                    console.error("FAILED...", error);
+                    alert("Oops! Failed to send message. Please try again later.");
+                });
         }
     }
 
