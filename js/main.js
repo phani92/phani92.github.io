@@ -45,4 +45,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const section = document.getElementById('contact-section');
         if (section) section.scrollIntoView({ behavior: 'smooth' });
     });
+
+    // Navigation
+    document.getElementById('nav-toggle').addEventListener('click', function () {
+        const menu = document.getElementById('nav-menu');
+        menu.classList.toggle('show');
+    });
 });
