@@ -99,12 +99,6 @@ const ContactForm = (function () {
             isValid = false;
         }
 
-        // Phone validation - optional but valid format if provided
-        if (phoneInput.value.trim() && !isValidPhone(phoneInput.value)) {
-            showError(phoneInput, 'Please enter a valid phone number');
-            isValid = false;
-        }
-
         // Subject validation - optional but min length if provided
         if (subjectInput.value.trim() && subjectInput.value.length < 3) {
             showError(subjectInput, 'Subject should be at least 3 characters');
@@ -136,18 +130,5 @@ const ContactForm = (function () {
                 contactForm.addEventListener('submit', validateForm);
             }
         },
-
-        setupContactLink: function () {
-            const contactLink = document.getElementById('contact-link');
-            if (contactLink) {
-                contactLink.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const contactForm = document.querySelector('.contact-form');
-                    if (contactForm) {
-                        contactForm.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            }
-        }
     };
 })();
