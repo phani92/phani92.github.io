@@ -39,6 +39,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Contact
     loadSection('contact-section', 'html/contact.html', () => {
         ContactForm.init();
-        ContactForm.setupContactLink();
+    });
+    document.getElementById('contact-link').addEventListener('click', function (e) {
+        e.preventDefault();
+        const section = document.getElementById('contact-section');
+        if (section) section.scrollIntoView({ behavior: 'smooth' });
     });
 });
