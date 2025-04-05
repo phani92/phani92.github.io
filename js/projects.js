@@ -36,7 +36,7 @@ const loadGitHubProjects = () => {
                     <p>⭐ ${repo.stargazers_count} &nbsp; | &nbsp; 🍴 ${repo.forks_count}</p>
                 `;
 
-                projectsList.appendChild(card);
+                document.querySelector(".projects-list").appendChild(card);
             });
         })
         .catch(error => {

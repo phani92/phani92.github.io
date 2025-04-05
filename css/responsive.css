@@ -1,16 +1,26 @@
-body {
+/* ===========================
+   Global / Base Styles
+=========================== */
+html, body {
     margin: 0;
     padding: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
 }
 
 .container {
     width: 100%;
-    /* max-width: 1200px; */
     margin: 0 auto;
     padding: 0 15px;
 }
 
-.header, .footer {
+.header,
+.footer {
     text-align: center;
     padding: 20px 0;
 }
@@ -19,85 +29,15 @@ body {
     padding: 20px;
 }
 
-@media (max-width: 768px) {
-    .container {
-        padding: 0 10px;
-    }
-
-    .header, .footer {
-        padding: 15px 0;
-    }
-
-    .main-content {
-        padding: 15px;
-    }
-
-    .social-media {
-        flex-direction: column;
-        align-items: flex-start;
-        position: static; /* removes fixed positioning for mobile */
-        margin: 10px 10px 20px 0px;
-    }
-
-    .social-media-img {
-        width: 32px;
-        height: 32px;
-    }
-
-    nav {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    nav ul {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    nav ul li {
-        display: block;
-    }
-
-    nav ul li a {
-        font-size: 16px;
-    }
-
-    .container {
-        align-items: stretch; /* or flex-start */
-        padding: 20px;
-    }
+/* Responsive images and cards */
+img, .project-card {
+    max-width: 100%;
+    height: auto;
 }
 
-@media (max-width: 480px) {
-    .header h1 {
-        font-size: 24px;
-    }
-
-    .footer p {
-        font-size: 14px;
-    }
-
-    .social-media {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px; /* Add gap between icons */
-        width: 30px;
-        height: 30px;
-    }
-
-    nav ul {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    nav ul li {
-        display: block;
-    }
-
-    nav ul li a {
-        font-size: 16px;
-    }
-}
+/* ===========================
+   Navigation
+=========================== */
 
 /* Hide toggle button on desktop */
 .nav-toggle {
@@ -112,16 +52,61 @@ body {
     z-index: 999;
 }
 
-/* Responsive nav menu hidden by default */
+/* Default nav menu layout */
 .nav-menu {
     display: flex;
     gap: 20px;
 }
 
+/* ===========================
+   Tablet and Smaller (≤768px)
+=========================== */
 @media (max-width: 768px) {
-
     .container {
-        padding: 10px 10px;
+        padding: 10px;
+        align-items: flex-start;
+    }
+
+    .header,
+    .footer {
+        padding: 15px;
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .social-media {
+        flex-direction: column;
+        align-items: flex-start;
+        position: static;
+        margin: 5px 5px 5px 0;
+        padding-left: 10px;
+    }
+
+    .social-media-img {
+        width: 32px;
+        height: 32px;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: center;
+        position: static;
+        margin-top: 10px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    nav ul li {
+        display: block;
+    }
+
+    nav ul li a {
+        font-size: 18px;
     }
 
     .nav-toggle {
@@ -131,27 +116,40 @@ body {
     .nav-menu {
         display: none;
         flex-direction: column;
-        background-color: #121212;
-        position: absolute;
-        top: 50px;
-        right: 20px;
-        padding: 10px;
-        border: 1px solid #333;
-        border-radius: 10px;
-        z-index: 100;
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: opacity 0.3s ease, max-height 0.3s ease;
     }
 
     .nav-menu.show {
         display: flex;
+        opacity: 1;
+        max-height: 300px;
+    }
+}
+
+/* ===========================
+   Phones and Smaller (≤480px)
+=========================== */
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 24px;
     }
 
-    nav ul li a {
-        font-size: 18px;
+    .footer p {
+        font-size: 14px;
     }
 
     .social-media {
         flex-direction: column;
-        align-items: flex-start;
-        padding-left: 10px;
+        align-items: center;
+        gap: 10px;
+        width: 30px;
+        height: 30px;
+    }
+
+    nav ul li a {
+        font-size: 16px;
     }
 }

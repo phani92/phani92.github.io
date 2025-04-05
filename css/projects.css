@@ -13,6 +13,10 @@
 }
 
 .project-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
     background-color: #1e1e1e;
     border: 1px solid #333;
     border-radius: 10px;
