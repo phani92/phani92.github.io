@@ -31,10 +31,17 @@ const loadGitHubProjects = () => {
                 card.className = 'project-card';
 
                 card.innerHTML = `
-                    <h3><a href="${repo.html_url}" target="_blank">${repo.name}</a></h3>
-                    <p>${repo.description || 'No description'}</p>
-                    <p>⭐ ${repo.stargazers_count} &nbsp; | &nbsp; 🍴 ${repo.forks_count}</p>
+                    <a href="${repo.html_url}" target="_blank" class="project-card-link">
+                        <h3>${repo.name}</h3>
+                        <p>${repo.description || 'No description'}</p>
+                        <p>⭐ ${repo.stargazers_count} &nbsp; | &nbsp; 🍴 ${repo.forks_count}</p>
+                    </a>
                 `;
+
+                // Make entire card clickable
+                card.addEventListener('click', () => {
+                    window.open(repo.html_url, '_blank');
+                });
 
                 document.querySelector(".projects-list").appendChild(card);
             });

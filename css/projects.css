@@ -24,6 +24,7 @@
     color: #fff;
     transition: transform 0.2s ease, border-color 0.2s ease;
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    cursor: pointer;
 }
 
 .project-card:hover {
@@ -42,6 +43,7 @@
 
 .project-card p {
     margin: 5px 0;
+    color: #ffffff; /* or whatever your original color was */
 }
 
 @media (max-width: 600px) {
