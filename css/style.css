@@ -75,3 +75,7 @@ nav ul li a:hover {
     width: 40px;
     height: 40px;
 }
+
+footer {
+    text-align: center;
+}
