@@ -50,12 +50,23 @@ img, .project-card {
     top: 10px;
     right: 20px;
     z-index: 999;
+    cursor: pointer;
+}
+
+.nav-toggle:hover {
+    color: #1e90ff;
 }
 
 /* Default nav menu layout */
 .nav-menu {
     display: flex;
     gap: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    width: 100%;
 }
 
 /* ===========================
@@ -120,12 +131,29 @@ img, .project-card {
         max-height: 0;
         overflow: hidden;
         transition: opacity 0.3s ease, max-height 0.3s ease;
+
+        /* Ensure it stays on right side */
+        position: absolute;
+        top: 50px;
+        right: 10px;
+        background-color: #121212;
+        padding: 10px;
+        border: 1px solid #333;
+        border-radius: 10px;
+        z-index: 999;
+        min-width: 160px;
+        text-align: left;
     }
 
     .nav-menu.show {
         display: flex;
         opacity: 1;
         max-height: 300px;
+    }
+
+    .footer p {
+        text-align: center;
+        margin: 0 auto;
     }
 }
 
@@ -142,11 +170,13 @@ img, .project-card {
     }
 
     .social-media {
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
-        gap: 10px;
-        width: 30px;
-        height: 30px;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin: 10px auto;
+        width: 32px;
+        height: 32px;
     }
 
     nav ul li a {
