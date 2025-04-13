@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Blogs
     document.getElementById('blogs-link').addEventListener('click', function (e) {
         e.preventDefault();
-        alert('Blogs section coming soon!');
+        window.open('html/blogs.html', '_blank');
     });
 
     // Contact

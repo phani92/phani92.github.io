@@ -1,6 +1,7 @@
 # Portfolio Builder
 * This project builds a website for personal portfolio using html, css and javascript.
 * Currently this project is hosted on [github pages](https://pages.github.com/).
+* The blogs are genereated by an AI agent which is implemented in another repository.
 
 ## Project Structure
 
@@ -13,6 +14,7 @@
   - `env.js`: Add all the hard coded values like api keys etc..
   - `contact.js`: Javascript file to handle contact section.
   - `projects.js`: Javascript file to handle projects section.
+  - `blogs.js`: Javascript file to handle blogs section.
 - `assets/`: Directory for images and fonts.
   - `images/`: Contains image files used in the website.
   - `fonts/`: Contains custom font files.
@@ -27,6 +29,7 @@
 3. Replace your name and description in html/profile.html.
 4. Replace `profile-placeholder.jpg` with your own image but with the same file name.
 5. In `js/projects.js` file, replace the github weblink `https://api.github.com/users/<your_user_name>/repos` to fetch your own projects.
+6. You can remove the blogs section if you don't want to use it.
 
 ### Sending the contact form via email
 - This project uses [emailjs](https://www.emailjs.com) to send the contact form information as an email to a designated address.

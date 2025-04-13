@@ -1,5 +1,5 @@
 // Author: Phani!
-// Purpose: JavaScript file for the contact
+// Purpose: JavaScript file for the contact section.
 
 const ContactForm = (function () {
     // Initialize EmailJS
