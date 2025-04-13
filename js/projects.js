@@ -1,3 +1,6 @@
+// Author: Phani!
+// Purpose: JavaScript file for the projects section of the website.
+
 const loadGitHubProjects = () => {
     const projectsList = document.getElementById('projects-list');
     if (!projectsList) {
