@@ -1,0 +1,61 @@
+name: Import Blogs from blogBot
+
+on:
+  workflow_dispatch:  # Allows manual trigger
+  schedule:
+    - cron: '0 8 * * *'  # Runs every day at 08:00 UTC (optional)
+
+jobs:
+  import-blogs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout phani92.github.io
+        uses: actions/checkout@v3
+
+      - name: Clone blogBot repository
+        run: |
+          git clone https://x-access-token:${{ secrets.GH_PAT }}@github.com/phani92/blogBot.git blogBot
+
+      - name: Identify new files
+        id: find_new
+        run: |
+          mkdir -p blogs
+          mkdir -p new_files
+
+          for file in blogBot/blog/*; do
+            filename=$(basename "$file")
+            if [ ! -f "blogs/$filename" ]; then
+              cp "$file" "blogs/"
+              cp "$file" "new_files/$filename"
+            fi
+          done
+
+          echo "new_files=$(ls new_files | jq -R -s -c 'split("\n") | map(select(. != ""))')" >> $GITHUB_OUTPUT
+
+      - name: Update blogList.json
+        run: |
+          cd blogs
+          touch blogList.json
+          jq . blogList.json || echo "[]" > blogList.json
+
+          existing=$(cat blogList.json | jq '.')
+          new_files=${{ steps.find_new.outputs.new_files }}
+
+          echo $new_files | jq -c '.[]' | while read fname; do
+            if ! echo $existing | jq -e --arg f "$fname" '.[] | select(. == $f)' > /dev/null; then
+              existing=$(echo $existing | jq --arg f "$fname" '. + [$f]')
+            fi
+          done
+
+          echo $existing | jq '.' > blogList.json
+          cd ..
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+          git add blogs/
+          git commit -m "Sync new blogs from blogBot and update blogList.json" || echo "No changes to commit"
+          git push
