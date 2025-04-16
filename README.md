@@ -1,7 +1,7 @@
 # Portfolio Builder
 * This project builds a website for personal portfolio using html, css and javascript.
 * Currently this project is hosted on [github pages](https://pages.github.com/).
-* The blogs are genereated by an AI agent which is implemented in another repository.
+* The blogs are genereated by an AI agent which is implemented in [blogBot](https://github.com/phani92/blogBot) repository.
 
 ## Project Structure
 
