@@ -151,6 +151,24 @@ footer {
         max-height: 300px;
     }
 
+    .blog-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .blog-list {
+        width: 100%;
+        max-width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #333;
+        resize: none;
+    }
+
+    .blog-content {
+        padding: 20px;
+        width: 100%;
+    }
+
     .footer p {
         text-align: center;
         margin: 0 auto;
@@ -180,6 +198,22 @@ footer {
         width: 100%;
         max-width: 300px;
         height: auto;
+    }
+
+    .blog-list h2 {
+        text-align: center;
+    }
+
+    .blog-list ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .blog-list li {
+        flex: 1 1 40%;
+        text-align: center;
     }
 
     nav ul li a {
