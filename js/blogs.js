@@ -63,8 +63,20 @@ function loadBlog(filename) {
                     // Links (escaped, then converted to safe anchors)
                     .replace(/\[([^\]]+)\]\(([^\)]+)\)/gim, function(match, text, url) {
                         // Additional validation for URLs
-                        if (url.match(/^(https?:\/\/|\/)/)) {
-                            return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + text + '</a>';
+                        const isExternal = url.match(/^https?:\/\//);
+                        const isRelative = url.match(/^\//);
+                        
+                        if (isExternal || isRelative) {
+                            // Escape URL for safe attribute usage
+                            const safeUrl = url.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                            
+                            if (isExternal) {
+                                // External links open in new tab with security attributes
+                                return '<a href="' + safeUrl + '" target="_blank" rel="noopener noreferrer">' + text + '</a>';
+                            } else {
+                                // Relative links open in same tab
+                                return '<a href="' + safeUrl + '">' + text + '</a>';
+                            }
                         }
                         return match; // Don't convert if not a valid URL
                     })
