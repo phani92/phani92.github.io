@@ -110,7 +110,14 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        // Define error handler before loading scripts
+        function handleMarkedLoadError() {
+            console.warn('Marked library failed to load from both local and CDN sources');
+        }
+    </script>
+    <script src="../js/marked.min.js" onerror="handleMarkedLoadError()"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" onerror="handleMarkedLoadError()"></script>
     <script src="../js/blogs.js"></script>
 </body>
 
