@@ -145,6 +145,33 @@ const ContactForm = (function () {
 
         // If valid, submit the form (or show success message)
         if (isValid) {
+            // Check if EmailJS is available
+            if (!window.emailjs) {
+                // EmailJS not loaded, show error message
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'error-message';
+                errorMessage.textContent = 'Email service is currently unavailable. Please try again later or contact us directly.';
+                errorMessage.style.color = '#ff3860';
+                errorMessage.style.marginTop = '10px';
+                errorMessage.style.padding = '10px';
+                errorMessage.style.backgroundColor = 'rgba(255, 56, 96, 0.2)';
+                errorMessage.style.borderRadius = '5px';
+                errorMessage.style.textAlign = 'center';
+                
+                // Remove existing error messages
+                const existingMessages = document.querySelectorAll('.contact-form > .error-message');
+                existingMessages.forEach(msg => msg.remove());
+                
+                // Add the error message to the end of the form
+                this.appendChild(errorMessage);
+                
+                // Remove error message after 5 seconds
+                setTimeout(() => {
+                    errorMessage.remove();
+                }, 5000);
+                return;
+            }
+
             const templateParams = {
                 from_name: nameInput.value,
                 from_email: emailInput.value,
@@ -168,13 +195,16 @@ const ContactForm = (function () {
     // Public methods
     return {
         init: function () {
-            loadEmailJS().then(() => {
-                const contactForm = document.querySelector('.contact-form');
-                if (contactForm) {
-                    contactForm.addEventListener('submit', validateForm);
-                }
-            }).catch((error) => {
+            // Attach form validation immediately, regardless of EmailJS load status
+            const contactForm = document.querySelector('.contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', validateForm);
+            }
+            
+            // Load EmailJS in the background
+            loadEmailJS().catch((error) => {
                 console.error('Error loading EmailJS:', error);
+                // EmailJS failed to load, but validation will still work
             });
         },
     };

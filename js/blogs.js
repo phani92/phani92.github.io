@@ -32,12 +32,66 @@ function loadBlog(filename) {
         .then(res => res.text())
         .then(md => {
             const contentEl = document.getElementById('blog-content');
-            contentEl.innerHTML = marked.parse(md);
+            
+            // Check if marked library is available
+            if (typeof marked !== 'undefined' && marked.parse) {
+                contentEl.innerHTML = marked.parse(md);
+            } else {
+                // Fallback: Simple markdown rendering with HTML escaping for security
+                console.warn('Marked library not available, using basic rendering');
+                
+                // First, escape HTML to prevent XSS
+                const escapeHtml = (text) => {
+                    const div = document.createElement('div');
+                    div.textContent = text;
+                    return div.innerHTML;
+                };
+                
+                // Escape the entire markdown content first
+                let html = escapeHtml(md);
+                
+                // Then apply markdown formatting on the escaped content
+                html = html
+                    // Headers (after escaping, these are safe)
+                    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                    // Bold
+                    .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+                    // Italic
+                    .replace(/\*(.*?)\*/gim, '<em>$1</em>')
+                    // Links (escaped, then converted to safe anchors)
+                    .replace(/\[([^\]]+)\]\(([^\)]+)\)/gim, function(match, text, url) {
+                        // Additional validation for URLs
+                        const isExternal = url.match(/^https?:\/\//);
+                        const isRelative = url.match(/^\//);
+                        
+                        if (isExternal || isRelative) {
+                            // Escape URL for safe attribute usage
+                            const safeUrl = url.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                            
+                            if (isExternal) {
+                                // External links open in new tab with security attributes
+                                return '<a href="' + safeUrl + '" target="_blank" rel="noopener noreferrer">' + text + '</a>';
+                            } else {
+                                // Relative links open in same tab
+                                return '<a href="' + safeUrl + '">' + text + '</a>';
+                            }
+                        }
+                        return match; // Don't convert if not a valid URL
+                    })
+                    // Line breaks
+                    .replace(/\n\n/gim, '</p><p>')
+                    .replace(/\n/gim, '<br>');
+                
+                contentEl.innerHTML = '<p>' + html + '</p>';
+            }
+            
             contentEl.style.display = 'block';
         })
         .catch(err => {
             console.error('Error loading markdown:', err);
-            document.getElementById('blog-content').innerHTML = 'Error loading blog post.';
+            document.getElementById('blog-content').innerHTML = '<p style="color: #ff3860;">Error loading blog post. Please try again later.</p>';
         });
 }
 
