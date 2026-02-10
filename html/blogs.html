@@ -110,7 +110,23 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        // Define error handler before loading scripts
+        function handleMarkedLoadError() {
+            console.warn('Marked library failed to load from CDN');
+        }
+        
+        // Try loading from local first, then CDN if not already loaded
+        function tryLoadFromCDN() {
+            if (typeof marked === 'undefined') {
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
+                script.onerror = handleMarkedLoadError;
+                document.head.appendChild(script);
+            }
+        }
+    </script>
+    <script src="../js/marked.min.js" onerror="tryLoadFromCDN()"></script>
     <script src="../js/blogs.js"></script>
 </body>
 
