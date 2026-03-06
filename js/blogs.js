@@ -15,6 +15,9 @@ fetch('../blogs/blogList.json')
             a.textContent = file.replace('.md', '');
             a.addEventListener('click', (e) => {
                 e.preventDefault();
+                // Mark active link
+                document.querySelectorAll('.blog-list a').forEach(el => el.classList.remove('active'));
+                a.classList.add('active');
                 loadBlog(file);
             });
 
@@ -35,7 +38,7 @@ function loadBlog(filename) {
             
             // Check if marked library is available
             if (typeof marked !== 'undefined' && marked.parse) {
-                contentEl.innerHTML = marked.parse(md);
+                contentEl.innerHTML = '<div class="blog-content-inner">' + marked.parse(md) + '</div>';
             } else {
                 // Fallback: Simple markdown rendering with HTML escaping for security
                 console.warn('Marked library not available, using basic rendering');
@@ -84,14 +87,14 @@ function loadBlog(filename) {
                     .replace(/\n\n/gim, '</p><p>')
                     .replace(/\n/gim, '<br>');
                 
-                contentEl.innerHTML = '<p>' + html + '</p>';
+                contentEl.innerHTML = '<div class="blog-content-inner"><p>' + html + '</p></div>';
             }
             
             contentEl.style.display = 'block';
         })
         .catch(err => {
             console.error('Error loading markdown:', err);
-            document.getElementById('blog-content').innerHTML = '<p style="color: #ff3860;">Error loading blog post. Please try again later.</p>';
+            document.getElementById('blog-content').innerHTML = '<div class="blog-content-inner"><p style="color: #ff3860;">Error loading blog post. Please try again later.</p></div>';
         });
 }
 
