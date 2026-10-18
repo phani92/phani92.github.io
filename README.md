@@ -31,7 +31,7 @@ node --test tests/*.test.js
 
 ## Add a project
 
-1. Add an entry to `data/projects.json`. The array order is the display order, and the featured entry must stay first. Fields: `id`, `title`, `category` (`embedded` or `ai`), `tech`, `summary`, `repo`, and optionally `image`, `imageAlt`, `featured` and `stats`.
+1. Add an entry to `data/projects.json`. The array order is the display order, and the featured entry must stay first. Fields: `id`, `title`, `category` (`embedded` or `ai`), `tech`, `summary`, `repo`, and optionally `image`, `imageAlt`, `icon` (`chip`, `wave` or `flask`: the picture shown when there is no image or it fails to load), `featured` and `stats`.
 2. Put a compressed image in `images/projects/` and point `image` at it (for example `images/projects/my-project.webp`), with a short `imageAlt`.
 
 ## Blog flow
