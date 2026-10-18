@@ -1,0 +1,64 @@
+[
+  {
+    "id": "blogBot",
+    "title": "blogBot",
+    "category": "ai",
+    "tech": "Python",
+    "summary": "An AI agent that pulls the day's news headlines, picks a random topic, format and tone, has Gemini write a post, and publishes it here daily via GitHub Actions.",
+    "repo": "https://github.com/phani92/blogBot",
+    "featured": true,
+    "stats": [
+      { "label": "posts published", "source": "blogPostCount" },
+      { "label": "running since", "value": "Apr 2025" }
+    ]
+  },
+  {
+    "id": "sick-pressure-sensor",
+    "title": "Pressure sensor rig",
+    "category": "embedded",
+    "tech": "C++",
+    "summary": "Measurement setup using an LVDT pressure sensor and Arduino.",
+    "repo": "https://github.com/phani92/sick-pressure-sensor",
+    "image": "images/projects/pressure-sensor.webp",
+    "imageAlt": "The pressure sensor rig: a hand-wired stripboard circuit and the sensor inside a clear enclosure"
+  },
+  {
+    "id": "ultrasonic-measurement-device",
+    "title": "Ultrasonic test rig",
+    "category": "embedded",
+    "tech": "MATLAB",
+    "summary": "Measurement setup using an ultrasonic sensor and a single-axis linear system.",
+    "repo": "https://github.com/phani92/ultrasonic-measurement-device",
+    "image": "images/projects/ultrasonic.webp",
+    "imageAlt": "CAD render of the test rig: an Arduino with an ultrasonic sensor on a carriage that runs along a motor-driven linear rail",
+    "icon": "wave"
+  },
+  {
+    "id": "mate_service",
+    "title": "Mate Service",
+    "category": "embedded",
+    "tech": "C++ · ESP32",
+    "summary": "Inventory tracker for shared office consumables. Runs standalone on an ESP32-C3 or on a Node.js server.",
+    "repo": "https://github.com/phani92/mate_service",
+    "image": "images/projects/mate-service.webp",
+    "imageAlt": "Mate Service dashboard showing total stock, consumed and remaining bottles, and a form to record consumption"
+  },
+  {
+    "id": "corona_test_kit",
+    "title": "Flu vs COVID-19 classifier",
+    "category": "ai",
+    "tech": "Python",
+    "summary": "2020 machine-learning prototype: a Flask web app with a logistic-regression model trained on symptom data.",
+    "repo": "https://github.com/phani92/corona_test_kit",
+    "icon": "flask"
+  },
+  {
+    "id": "position-detection-system",
+    "title": "Position detection",
+    "category": "embedded",
+    "tech": "C++",
+    "summary": "Detects position using a resistance strip and an Arduino.",
+    "repo": "https://github.com/phani92/position-detection-system",
+    "icon": "chip"
+  }
+]
