@@ -33,6 +33,13 @@
     text-decoration: underline;
 }
 
+.blog-disclaimer {
+    margin-top: 4px;
+    color: var(--faint);
+    font-size: 13px;
+    font-style: italic;
+}
+
 .blog-layout {
     display: grid;
     grid-template-columns: 280px minmax(0, 1fr);
