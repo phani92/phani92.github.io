@@ -535,6 +535,8 @@
     font-size: 16px;
     font-weight: 700;
     color: var(--text);
+    /* A long unbroken title wraps instead of widening the page. */
+    overflow-wrap: anywhere;
 }
 
 .live-title:hover {

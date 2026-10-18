@@ -96,6 +96,7 @@
     border-radius: 10px;
     color: var(--muted);
     font-size: 14px;
+    overflow-wrap: anywhere;
     transition: background-color var(--ease), color var(--ease);
 }
 
