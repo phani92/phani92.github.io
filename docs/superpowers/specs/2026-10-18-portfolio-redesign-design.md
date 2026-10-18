@@ -124,7 +124,7 @@ Excluded: the notes repos (`algoAndDs`, `c-`, `python`), forks, `analogClock`, `
 - **`marked`:** `html/blogs.html` refers to a local `js/marked.min.js` that doesn't exist, so the page always falls back to the CDN today. Either add the file to the repo or load it from the CDN directly. The builder chooses; the dead reference must not remain.
 - **Fonts:** Inter from Google Fonts, in the weights actually used.
 - **Copy:** the builder drafts final copy from this document and the mockup. Use the hero headline "From silicon to smart agents." as approved in the mockup. Keep the supporting sentence and service blurbs short and plain. The owner reviews all copy at the end. Don't add claims the document doesn't support, such as years of experience, clients or certifications.
-- **The corona project credits no collaborator for now.** The training script header names a different author ("gundawar"), and the owner hasn't said whether it was joint work. Leave the card without a credit line and raise it with the owner at review.
+- **The corona project names no collaborator (owner-approved).** Show it as a regular project card with no credit line.
 - **Unused images** (`images/in-logo/`, `images/github/`, `images/instagram/`) may be deleted if the new design doesn't use them.
 - **Docs:** update `README.md`, which describes EmailJS, `projects.js` and the setup steps, and `CLAUDE.md`, whose architecture section describes the fragment-loading shell, to match the new structure.
 - Add `.superpowers/` to `.gitignore`. It holds local brainstorming mockups.
