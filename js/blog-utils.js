@@ -60,15 +60,22 @@ var BlogUtils = (function () {
     return days >= 0 && days <= maxAgeDays;
   }
 
-  function resolvePostFromHash(hash, files) {
+  // The post named by a hash such as "#Bots_diary_2026_10_06.md", or null when the hash
+  // isn't exactly one of the files (an in-post anchor, the skip link, a malformed escape).
+  function postFromHashChange(hash, files) {
+    if (!Array.isArray(files)) return null;
     var raw = String(hash || '').replace(/^#/, '');
     try {
       raw = decodeURIComponent(raw);
     } catch (e) {
-      raw = '';
+      return null;
     }
-    if (files.indexOf(raw) !== -1) return raw;
-    return files.length ? files[0] : null;
+    return raw && files.indexOf(raw) !== -1 ? raw : null;
+  }
+
+  // Page load: the post named by the hash, else the newest post (null when there are none).
+  function resolvePostFromHash(hash, files) {
+    return postFromHashChange(hash, files) || (files.length ? files[0] : null);
   }
 
   var api = {
@@ -79,7 +86,8 @@ var BlogUtils = (function () {
     countPosts: countPosts,
     extractTitle: extractTitle,
     isLive: isLive,
-    resolvePostFromHash: resolvePostFromHash
+    resolvePostFromHash: resolvePostFromHash,
+    postFromHashChange: postFromHashChange
   };
   if (typeof window !== 'undefined') window.BlogUtils = api;
   return api;

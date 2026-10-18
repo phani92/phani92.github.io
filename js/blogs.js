@@ -64,19 +64,29 @@
         scrollListTo(links[name]);
     }
 
-    function openFromHash(fromNavigation) {
+    function openPost(name) {
+        setActive(name);
+        loadBlog(name);
+    }
+
+    // Page load: the post named in the hash, or the newest post.
+    function openInitialPost() {
         var name = BlogUtils.resolvePostFromHash(location.hash, files);
         if (!name) {
             contentEl.innerHTML = statusHtml('No posts yet.', false);
             return;
         }
-        if (fromNavigation) {
-            if (phone.matches) details.open = false;
-            if (contentEl.getBoundingClientRect().top < 0) contentEl.scrollIntoView();
-        }
-        if (name === current) return;
-        setActive(name);
-        loadBlog(name);
+        openPost(name);
+    }
+
+    // Later hash changes switch posts only for an exact post name. Any other hash (an in-post
+    // footnote such as #ref1, the skip link) is left to the browser, which scrolls to it.
+    function onHashChange() {
+        var name = BlogUtils.postFromHashChange(location.hash, files);
+        if (!name || name === current) return;
+        if (phone.matches) details.open = false;
+        if (contentEl.getBoundingClientRect().top < 0) contentEl.scrollIntoView();
+        openPost(name);
     }
 
     function renderPost(md) {
@@ -168,6 +178,12 @@
         if (details.open && current) scrollListTo(links[current]);
     });
 
+    // Phones: picking any post closes the list, including the one already open (its link
+    // doesn't change the hash, so no hashchange follows).
+    listEl.addEventListener('click', function (e) {
+        if (phone.matches && e.target.closest('a')) details.open = false;
+    });
+
     fetch('../blogs/blogList.json')
         .then(function (res) {
             if (!res.ok) throw new Error('HTTP ' + res.status + ' for blogList.json');
@@ -176,10 +192,8 @@
         .then(function (list) {
             files = Array.isArray(list) ? list : [];
             buildList(files);
-            openFromHash(false);
-            window.addEventListener('hashchange', function () {
-                openFromHash(true);
-            });
+            openInitialPost();
+            window.addEventListener('hashchange', onHashChange);
         })
         .catch(function (err) {
             console.error(err);

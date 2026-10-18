@@ -57,3 +57,14 @@ test('resolvePostFromHash', () => {
   }
   assert.equal(B.resolvePostFromHash('#a', []), null);
 });
+
+test('postFromHashChange returns only an exact post name', () => {
+  const files = ['Bots_diary_2026_10_06.md', 'Bots_diary_2026_09_14.md', 'my notes.md'];
+  assert.equal(B.postFromHashChange('#Bots_diary_2026_09_14.md', files), 'Bots_diary_2026_09_14.md');
+  assert.equal(B.postFromHashChange('#my%20notes.md', files), 'my notes.md');
+  for (const h of ['#ref1', '#main', '', '#', '#nope.md', '#%E0%A4%A', '#../index.html', undefined, null]) {
+    assert.equal(B.postFromHashChange(h, files), null);
+  }
+  assert.equal(B.postFromHashChange('#a.md', []), null);
+  assert.equal(B.postFromHashChange('#a.md', null), null);
+});
