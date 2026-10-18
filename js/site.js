@@ -35,14 +35,47 @@ var SiteUtils = (function () {
     });
   }
 
+  // The footer keeps "2026" as its no-JS text; with JS it follows the clock.
+  function initYear(doc, now) {
+    var year = String((now || new Date()).getFullYear());
+    var slots = doc.querySelectorAll('[data-year]');
+    for (var i = 0; i < slots.length; i++) slots[i].textContent = year;
+  }
+
+  // With JS the skip link moves focus without touching the URL hash, so the blog page keeps
+  // its deep link. Without JS the plain href="#main" still works.
+  function initSkipLinks(doc) {
+    var links = doc.querySelectorAll('.skip-link');
+    for (var i = 0; i < links.length; i++) wireSkipLink(links[i]);
+
+    function wireSkipLink(link) {
+      link.addEventListener('click', function (e) {
+        var href = link.getAttribute('href') || '';
+        var target = href.charAt(0) === '#' ? doc.getElementById(href.slice(1)) : null;
+        if (!target) return;
+        e.preventDefault();
+        if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+        target.focus();
+      });
+    }
+  }
+
   if (typeof document !== 'undefined') {
     document.addEventListener('DOMContentLoaded', function () {
       initEmailLinks(document);
       initNav(document);
+      initYear(document);
+      initSkipLinks(document);
     });
   }
 
-  return { mailtoHref: mailtoHref, initEmailLinks: initEmailLinks, initNav: initNav };
+  return {
+    mailtoHref: mailtoHref,
+    initEmailLinks: initEmailLinks,
+    initNav: initNav,
+    initYear: initYear,
+    initSkipLinks: initSkipLinks
+  };
 })();
 
 if (typeof module !== 'undefined') module.exports = SiteUtils;

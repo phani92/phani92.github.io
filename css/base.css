@@ -132,6 +132,11 @@ button {
     top: 12px;
 }
 
+/* The skip link focuses <main> from JS; the whole region doesn't need a focus ring. */
+main[tabindex="-1"]:focus {
+    outline: none;
+}
+
 .gradient-text {
     background: var(--gradient);
     -webkit-background-clip: text;

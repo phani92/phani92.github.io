@@ -70,3 +70,51 @@ test('initNav toggles the menu and closes it when a link is clicked', () => {
 test('initNav does nothing when the nav is missing', () => {
   assert.doesNotThrow(() => S.initNav({ getElementById: () => null }));
 });
+
+test('initYear fills every year slot from the clock', () => {
+  const slots = [{ textContent: '2026' }, { textContent: '2026' }];
+  const doc = { querySelectorAll: (sel) => (sel === '[data-year]' ? slots : []) };
+  S.initYear(doc, new Date(2031, 0, 1));
+  assert.deepEqual(slots.map(s => s.textContent), ['2031', '2031']);
+  S.initYear(doc);
+  assert.equal(slots[0].textContent, String(new Date().getFullYear()));
+});
+
+test('initSkipLinks focuses the target without changing the hash', () => {
+  const attrs = {};
+  let focused = false;
+  const main = {
+    hasAttribute: (k) => k in attrs,
+    setAttribute: (k, v) => { attrs[k] = String(v); },
+    focus: () => { focused = true; }
+  };
+  let handler = null;
+  const link = {
+    getAttribute: (k) => (k === 'href' ? '#main' : null),
+    addEventListener: (type, fn) => { if (type === 'click') handler = fn; }
+  };
+  const doc = {
+    querySelectorAll: (sel) => (sel === '.skip-link' ? [link] : []),
+    getElementById: (id) => (id === 'main' ? main : null)
+  };
+
+  S.initSkipLinks(doc);
+
+  let prevented = false;
+  handler({ preventDefault: () => { prevented = true; } });
+  assert.equal(prevented, true);
+  assert.equal(focused, true);
+  assert.equal(attrs.tabindex, '-1');
+});
+
+test('initSkipLinks leaves the link alone when the target is missing', () => {
+  let handler = null;
+  const link = {
+    getAttribute: () => '#missing',
+    addEventListener: (type, fn) => { handler = fn; }
+  };
+  S.initSkipLinks({ querySelectorAll: () => [link], getElementById: () => null });
+  let prevented = false;
+  handler({ preventDefault: () => { prevented = true; } });
+  assert.equal(prevented, false);
+});
