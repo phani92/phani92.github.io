@@ -86,6 +86,45 @@
       });
   }
 
+  function fetchOk(url, kind) {
+    return fetch(url).then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res[kind]();
+    });
+  }
+
+  // Fills the blogBot post count and the latest-post strip. Failures stay silent: the
+  // stat keeps its default and the strip stays hidden.
+  function loadBlogData() {
+    return fetchOk('blogs/blogList.json', 'json').then(function (list) {
+      var count = BlogUtils.countPosts(list);
+      if (count !== null) {
+        Home.stats.blogPostCount = count.toLocaleString('en-US');
+        Home.applyStats();
+      }
+      var name = BlogUtils.latestDiary(list);
+      if (!name) return;
+      return fetchOk('blogs/' + name, 'text').then(function (markdown) {
+        var title = BlogUtils.extractTitle(markdown);
+        var strip = document.getElementById('live');
+        if (!title || !strip) return;
+        var date = BlogUtils.parseBlogFile(name).date;
+        var href = 'html/blogs.html#' + encodeURIComponent(name);
+        var badge = strip.querySelector('.live-badge');
+        var live = BlogUtils.isLive(date, new Date());
+        badge.textContent = live ? '● Live' : 'Latest post';
+        badge.classList.toggle('is-live', live);
+        strip.querySelector('.live-title').textContent = title;
+        strip.querySelector('.live-title').href = href;
+        strip.querySelector('.live-date').textContent = 'Published automatically on ' + BlogUtils.formatDate(date);
+        strip.querySelector('.live-link').href = href;
+        strip.hidden = false;
+      });
+    }).catch(function (err) {
+      console.warn('Could not load blog data:', err);
+    });
+  }
+
   Home.ready = new Promise(function (resolve) {
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function () { resolve(loadProjects()); });
@@ -93,4 +132,5 @@
       resolve(loadProjects());
     }
   });
+  Home.ready.then(loadBlogData);
 })();
