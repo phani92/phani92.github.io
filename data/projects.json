@@ -4,7 +4,7 @@
     "title": "blogBot",
     "category": "ai",
     "tech": "Python",
-    "summary": "An AI agent that pulls the day's news headlines, picks a random topic, format and tone, has Gemini write a post, and publishes it here daily via GitHub Actions.",
+    "summary": "An AI agent that pulls the day's news headlines, picks a random topic, format and tone, has Gemini write a post, and publishes it here on a schedule via GitHub Actions.",
     "repo": "https://github.com/phani92/blogBot",
     "featured": true,
     "stats": [
