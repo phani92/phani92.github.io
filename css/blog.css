@@ -1,0 +1,332 @@
+/* Blog page: layout, the post list (sidebar on desktop, collapsible on phones), Markdown body. */
+
+.blog-page {
+    padding: 40px 0 72px;
+}
+
+.blog-head {
+    margin-bottom: 32px;
+}
+
+.blog-head .eyebrow {
+    margin-bottom: 6px;
+}
+
+.blog-title {
+    font-size: clamp(1.8rem, 5vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+
+.blog-intro {
+    margin-top: 10px;
+    color: var(--muted);
+}
+
+.blog-intro a {
+    color: var(--cyan);
+    font-weight: 600;
+}
+
+.blog-intro a:hover {
+    text-decoration: underline;
+}
+
+.blog-disclaimer {
+    margin-top: 4px;
+    color: var(--faint);
+    font-size: 13px;
+    font-style: italic;
+}
+
+.blog-layout {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 48px;
+    align-items: start;
+}
+
+/* Post list */
+.blog-list {
+    position: sticky;
+    top: 24px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    background: #101018;
+    overflow: hidden;
+}
+
+.blog-list summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 20px 10px;
+    list-style: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--faint);
+    cursor: default;
+}
+
+.blog-list summary::-webkit-details-marker {
+    display: none;
+}
+
+.blog-count {
+    letter-spacing: 0;
+    color: var(--muted);
+}
+
+#blog-list {
+    max-height: calc(100vh - 110px);
+    padding: 0 8px 10px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
+}
+
+#blog-list a {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 10px;
+    color: var(--muted);
+    font-size: 14px;
+    overflow-wrap: anywhere;
+    transition: background-color var(--ease), color var(--ease);
+}
+
+#blog-list a:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text);
+}
+
+#blog-list a.active {
+    background: var(--purple-tint);
+    color: var(--text);
+    font-weight: 600;
+    box-shadow: inset 2px 0 0 var(--purple);
+}
+
+#blog-list a:focus-visible {
+    outline-offset: -2px;
+}
+
+.blog-list-status {
+    padding: 8px 12px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.blog-status {
+    color: var(--muted);
+}
+
+.blog-error {
+    color: #ff6b81;
+}
+
+/* Post body (Markdown) */
+.blog-post {
+    max-width: 72ch;
+    min-height: 50vh;
+    scroll-margin-top: 16px;
+    color: var(--text-soft);
+    font-size: 17px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.blog-post h1,
+.blog-post h2,
+.blog-post h3 {
+    color: var(--text);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+}
+
+.blog-post h1 {
+    margin: 0 0 20px;
+    font-size: clamp(1.6rem, 4vw, 2.1rem);
+    font-weight: 800;
+}
+
+.blog-post h2 {
+    margin: 40px 0 14px;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.blog-post h3 {
+    margin: 32px 0 10px;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.blog-post p,
+.blog-post ul,
+.blog-post ol,
+.blog-post blockquote,
+.blog-post pre,
+.blog-post table {
+    margin: 0 0 18px;
+}
+
+.blog-post strong {
+    color: var(--text);
+    font-weight: 700;
+}
+
+.blog-post a {
+    color: var(--cyan);
+    text-decoration: underline;
+    text-decoration-color: rgba(0, 200, 255, 0.4);
+    text-underline-offset: 3px;
+    transition: text-decoration-color var(--ease);
+}
+
+.blog-post a:hover {
+    text-decoration-color: var(--cyan);
+}
+
+.blog-post ul,
+.blog-post ol {
+    padding-left: 24px;
+}
+
+.blog-post ul {
+    list-style: disc;
+}
+
+.blog-post ol {
+    list-style: decimal;
+}
+
+.blog-post li {
+    margin-bottom: 6px;
+}
+
+.blog-post li::marker {
+    color: var(--purple);
+}
+
+.blog-post hr {
+    height: 0;
+    margin: 32px 0;
+    border: 0;
+    border-top: 1px solid var(--border);
+}
+
+.blog-post blockquote {
+    padding: 4px 0 4px 18px;
+    border-left: 3px solid var(--purple);
+    color: var(--muted);
+}
+
+.blog-post code {
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: #15151f;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.88em;
+    color: var(--purple-ink);
+}
+
+.blog-post pre {
+    padding: 16px 18px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #101018;
+    overflow-x: auto;
+    overflow-wrap: normal;
+}
+
+.blog-post pre code {
+    padding: 0;
+    background: none;
+    color: var(--text-soft);
+}
+
+/* Wide tables scroll sideways instead of widening the page. */
+.blog-post table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 15px;
+    overflow-wrap: normal;
+}
+
+.blog-post th,
+.blog-post td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    white-space: nowrap;
+}
+
+.blog-post th {
+    color: var(--text);
+    font-weight: 600;
+}
+
+/* Phones: the list becomes a collapsible block above the post. */
+@media (max-width: 720px) {
+    .blog-page {
+        padding: 28px 0 56px;
+    }
+
+    .blog-head {
+        margin-bottom: 24px;
+    }
+
+    .blog-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 28px;
+    }
+
+    .blog-list {
+        position: static;
+    }
+
+    .blog-list summary {
+        padding: 14px 16px;
+        font-size: 14px;
+        letter-spacing: 0;
+        text-transform: none;
+        color: var(--text);
+        cursor: pointer;
+    }
+
+    .blog-list summary::after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        margin-left: auto;
+        border-right: 2px solid var(--muted);
+        border-bottom: 2px solid var(--muted);
+        transform: translateY(-2px) rotate(45deg);
+        transition: transform var(--ease);
+    }
+
+    .blog-list details[open] summary::after {
+        transform: translateY(2px) rotate(-135deg);
+    }
+
+    .blog-list summary:focus-visible {
+        outline-offset: -2px;
+        border-radius: var(--radius-card);
+    }
+
+    #blog-list {
+        max-height: 55vh;
+    }
+
+    .blog-post {
+        font-size: 16px;
+    }
+}

@@ -1,56 +1,73 @@
-// Author: Phani!
-// Purpose: JavaScript file for the projects section of the website.
+var ProjectUtils = (function () {
+  var CATEGORY_LABELS = { embedded: 'EMBEDDED', ai: 'AI' };
+  var DEFAULT_ICONS = { embedded: 'chip', ai: 'wave' };
 
-const loadGitHubProjects = () => {
-    const projectsList = document.getElementById('projects-list');
-    if (!projectsList) {
-        console.warn('No #projects-list found in DOM');
-        return;
+  // Inline stroke icons (24x24) for tiles without an image.
+  var ICONS = {
+    chip: '<rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/>' +
+      '<path d="M9 2.5V6M12 2.5V6M15 2.5V6M9 18v3.5M12 18v3.5M15 18v3.5M2.5 9H6M2.5 12H6M2.5 15H6M18 9h3.5M18 12h3.5M18 15h3.5"/>',
+    wave: '<path d="M2 12c1.5 0 1.5-6 3-6s1.5 12 3 12 1.5-12 3-12 1.5 12 3 12 1.5-12 3-12 1.5 6 3 6"/>',
+    flask: '<path d="M9 2.5h6M10 2.5v6.2L4.6 18.4A2 2 0 0 0 6.3 21.5h11.4a2 2 0 0 0 1.7-3.1L14 8.7V2.5"/><path d="M7.2 14.5h9.6"/>'
+  };
+
+  var ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+
+  function escapeHTML(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ESCAPES[c]; });
+  }
+
+  function filterProjects(projects, category) {
+    if (category !== 'embedded' && category !== 'ai') return projects.slice();
+    return projects.filter(function (p) { return p.category === category; });
+  }
+
+  function tileIconHTML(icon, category) {
+    var name = ICONS[icon] ? icon : (DEFAULT_ICONS[category] || 'chip');
+    return '<div class="tile-icon" data-icon="' + escapeHTML(name) + '">' +
+      '<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" ' +
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + ICONS[name] + '</svg></div>';
+  }
+
+  function statHTML(stat) {
+    var source = stat.source ? ' data-stat-source="' + escapeHTML(stat.source) + '"' : '';
+    var value = stat.value != null && stat.value !== '' ? stat.value : '—';
+    return '<div class="stat"><span class="stat-value"' + source + '>' + escapeHTML(value) + '</span>' +
+      '<span class="stat-label">' + escapeHTML(stat.label) + '</span></div>';
+  }
+
+  function projectTileHTML(p) {
+    var category = p.category === 'ai' ? 'ai' : 'embedded';
+    var classes = 'tile tile--' + category + (p.featured ? ' tile--featured' : '');
+    var tag = (p.featured ? 'FEATURED · ' : '') + CATEGORY_LABELS[category] + ' · ' + p.tech;
+    var media = '';
+
+    if (!p.featured) {
+      media = p.image
+        ? '<img class="tile-img" src="' + escapeHTML(p.image) + '" alt="' + escapeHTML(p.imageAlt || '') + '" loading="lazy">'
+        : tileIconHTML(p.icon, category);
     }
 
-    fetch('https://api.github.com/users/phani92/repos')
-        .then(response => {
-            if (!response.ok) throw new Error('Failed to fetch repos');
-            return response.json();
-        })
-        .then(repos => {
-            console.log('Fetched repos:', repos);
+    var stats = p.featured && p.stats && p.stats.length
+      ? '<div class="tile-stats">' + p.stats.map(statHTML).join('') + '</div>'
+      : '';
 
-            // Filter out forks (optional)
-            const filtered = repos.filter(repo => !repo.fork && repo.stargazers_count > 0);
+    return '<a class="' + classes + '" href="' + escapeHTML(p.repo) + '" target="_blank" rel="noopener noreferrer">' +
+      media +
+      '<div class="tile-body">' +
+      '<p class="tile-tag">' + escapeHTML(tag) + '</p>' +
+      '<h3 class="tile-title">' + escapeHTML(p.title) + '</h3>' +
+      '<p class="tile-summary">' + escapeHTML(p.summary) + '</p>' +
+      '</div>' +
+      stats +
+      '</a>';
+  }
 
-            // Sort by stars
-            filtered.sort((a, b) => b.stargazers_count - a.stargazers_count);
+  return {
+    filterProjects: filterProjects,
+    escapeHTML: escapeHTML,
+    tileIconHTML: tileIconHTML,
+    projectTileHTML: projectTileHTML
+  };
+})();
 
-            projectsList.innerHTML = '';
-
-            if (filtered.length === 0) {
-                projectsList.innerHTML = `<p>No projects with stars yet.</p>`;
-                return;
-            }
-
-            filtered.forEach(repo => {
-                const card = document.createElement('div');
-                card.className = 'project-card';
-
-                card.innerHTML = `
-                    <a href="${repo.html_url}" target="_blank" class="project-card-link">
-                        <h3>${repo.name}</h3>
-                        <p>${repo.description || 'No description'}</p>
-                        <p>⭐ ${repo.stargazers_count} &nbsp; | &nbsp; 🍴 ${repo.forks_count}</p>
-                    </a>
-                `;
-
-                // Make entire card clickable
-                card.addEventListener('click', () => {
-                    window.open(repo.html_url, '_blank');
-                });
-
-                document.querySelector(".projects-list").appendChild(card);
-            });
-        })
-        .catch(error => {
-            console.error('Error loading GitHub projects:', error);
-            projectsList.innerHTML = `<p>Error loading projects: ${error.message}</p>`;
-        });
-};
+if (typeof module !== 'undefined') module.exports = ProjectUtils;
